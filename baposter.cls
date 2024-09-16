@@ -1078,9 +1078,12 @@
       \draw (image.east) node(title)[anchor=west,text width=\baposter@titleimage@textwidth]{%
         \begin{minipage}{\baposter@titleimage@textwidth}%
           \begin{center}%
-          \textbf{\Huge #3}\\%
-          {\Large #4}%
+          \textbf{\Huge #3}%
+          \vspace*{-.5cm}
           \end{center}%
+          \begin{adjustwidth}{.01\textwidth}{0pt}
+            {\Large #4}%
+          \end{adjustwidth}
         \end{minipage}
       };%
     \else% Has no eye catcher
