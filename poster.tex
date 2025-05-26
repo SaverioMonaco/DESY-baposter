@@ -20,7 +20,7 @@
 \usepackage{fontawesome}
 \usepackage{enumitem}
 \usepackage{adjustbox}
-\usepackage{svg}
+\usepackage[inkscapearea=page]{svg}
 \usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
 \usepackage{changepage}
 \usepackage[nomessages]{fp}% http://ctan.org/pkg/fp
@@ -29,18 +29,14 @@
 \usepackage[outline]{contour}
 \usepackage{tcolorbox}
 \usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\geometry{top=.7cm, left=1cm,right=1cm}
 
 % To remove once you work on your own project
 \input{dummycontent}
 \usepackage{lipsum}
 
-%%% Global Settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\graphicspath{{pix/}}	% Root directory of the pictures 
-\tracingstats=2			% Enabled LaTeX logging with conditionals
-
 %%% Color Definitions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % Color codes taken from:
 % https://quantum-zeuthen.desy.de/sites/sites_desygroups/sites_extern/site_quantum-zeuthen/content/e148955/e148956/DESYQuantum_Logoversions_eng.pdf
 \definecolor{desyblue}{RGB}{0,159,223}
@@ -73,8 +69,29 @@
 %%% Setting Background Image %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \background{
 	\begin{tikzpicture}[remember picture,overlay]%
-	\draw (current page.north west)+(-2em,2em) node[anchor=north west]
-	{\includegraphics[height=1.1\textheight]{background}};
+	\draw[opacity=.15] (current page.north west)+(7cm,0cm) node[anchor=north east]
+	{\includesvg[width=.3\linewidth]{assets/bg}};
+	\draw (current page.north east)+(-.2cm,-.2cm) node[anchor=north east]
+	{\includesvg[height=5cm]{./assets/logo1.svg}};
+	\draw (current page.south west)+(1cm, 2.6cm) node[anchor=north west]{
+		\includesvg[width=.7cm]{./assets/EUflag}
+	};
+	\draw[text width=.35\linewidth] (current page.north west)+(2cm, -4.3cm) node[anchor=north west]{
+		\fontsize{13pt}{0pt}\selectfont
+		$~^{1}$DESY, $~^{2}$University, $~^{3}$Passione
+	};
+	\draw[text width=.35\linewidth] (current page.south west)+(1.85cm, 2.5cm) node[anchor=north west]{
+		\normalsize\dummycontentacknowledgements			
+	};
+	\draw (current page.south east)+(-3cm, 2.7cm) node[anchor=north west]{
+		\includegraphics[height=2cm]{./assets/DESY.eps}
+	};
+	\draw (current page.south east)+(-9cm, 2.5cm) node[anchor=north west]{
+		\includesvg[height=2.5cm]{./assets/university}
+	};
+	\draw (current page.south east)+(-13cm, 2.5cm) node[anchor=north west]{
+		\includesvg[height=1.5cm]{./assets/logo2}
+	};
 	\end{tikzpicture}
 }
 
@@ -87,16 +104,17 @@
 	% this way
 	% eyecatcher=false, 
 	columns=6,
+	headerheight=0.13\textheight,
 	borderColor=desyblue,
 	headerColorOne=desyblue,
 	headerColorTwo=desyblue,
 	headerFontColor=white,
 	% Only simple background color used, no shading, so boxColorTwo isn't necessary
 	boxColorOne=boxcolor,
-	headershape=roundedright,
+	headershape=rounded,
 	headerfont=\Large\sf\bf,
 	textborder=rectangle,
-	background=none,
+	background=user,
 	headerborder=open,
     boxshade=plain
 }
@@ -106,35 +124,25 @@
 }
 %%% Title %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {\sf\bf
-	\rule{0cm}{1cm}\\
-    \color{desyblue} Example of a portrait DESY-themed poster built on baposter
+	\setlength{\spaceskip}{.3cm}
+	\fontsize{32pt}{0pt}\selectfont
+	\begin{flushleft}
+		\color{desyblue} \rule{.4cm}{0pt} \contour{white}{Example of a DESY-themed}\\
+						 \rule{.4cm}{0pt} \contour{white}{poster built upon \emph{baposter}}
+	\end{flushleft}
 }
 %%% Authors %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {
-	\vspace{1em} \textbf{Saverio Monaco}, John Doe, Tizio Caio Sempronio\\
-	{\smaller \faEnvelopeO\, saverio.monaco@desy.de, john.doe@desy.de, tizio.sempronio@desy.de}
-}
-%%% Logo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-{
-% the logos are compressed a bit into a simple box to make them smaller on the result
-% (wasn't able to find any bigger of them.)
-\setlength\fboxsep{0pt}
-\setlength\fboxrule{0.5pt}
-	\rule{.2cm}{0cm}
-	\rule{0cm}{4.2cm}
-	\includegraphics[height=.14\linewidth]{./assets/DESY}
-	\rule{.5cm}{0cm}
-}
-
-\headerbox{}%
-{name=top, column=0, row=0, span=5,
-	textborder=none,headerborder=none,boxheaderheight=0pt, boxColorOne=red!0}{
-	\rule{0pt}{0cm}\\[-.3cm]
-	{\color{desyblue}\rule{\linewidth}{.05cm}}\\[-0.5cm]
+    \mbox{\fontsize{16pt}{8pt}\selectfont
+		\rule{0pt}{.7cm}
+		\rule{.6cm}{0pt}\textbf{S. Monaco$^{1,2}$},
+		G. Giovanna$^{3}$,
+		\\[.1cm]
+	\rule{.9cm}{0pt}}
 }
 
 \headerbox{Abstract}%
-{name=abstract, column=0, below=top, span=3}{
+{name=abstract, column=0, row=0, span=3}{
 	\dummycontentabstract
 }
 
@@ -160,7 +168,7 @@
 }
 
 \headerbox{Something else}%
-{name=somethingelse, column=3, below=top, span=3, bottomaligned=something}{
+{name=somethingelse, column=3, row=0, span=3, bottomaligned=something}{
 	\dummycontentsomethingelse
 }
 
@@ -181,22 +189,6 @@
 		{\includesvg[width=.6\linewidth]{./assets/qr-code}}
 	\end{center}
 }
-
-\headerbox{}%
-{name=foottext, column=0, span=6, above=bottom,%
- textborder=none,headerborder=none,boxheaderheight=0pt}{
-	
-	\begin{minipage}{.33\linewidth}
-		\rule{.6cm}{0cm}
-		\raisebox{-.4cm}{\includesvg[height=1cm]{./assets/RWTHlogo}}
-		\rule{.6cm}{0cm}
-		\raisebox{-.7cm}{\includesvg[height=1.6cm]{./assets/Engage}}
-	\end{minipage}
-	\begin{minipage}{.66\linewidth}
-			\raisebox{-.1cm}{\includesvg[width=.6cm]{./assets/EUflag}}
-			\LipsumPar{66}
-	\end{minipage}
- }
 
 
 \end{poster}

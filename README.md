@@ -1,4 +1,7 @@
 # A DESY-themed for of baposter: A nifty LaTeX Poster Class 
 
-## Portrait poster example:
+## Poster template:
 ![portrait](./poster.png)
+
+## Poster example:
+![exportrait](./examples/poster.png)
